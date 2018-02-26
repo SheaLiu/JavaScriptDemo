@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>图片滑动</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #box{
+            height: 460px;
+            margin: 30px auto;
+            position: relative;
+            border: 1px solid black;
+            overflow: hidden;
+        }
+        #box img{
+            position: absolute;
+            cursor: pointer;
+            left: 0;
+            top: 0;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <img src="img/timg (1).jpeg" width="50%" >
+        <img src="img/timg (2).jpeg" width="50%" >
+        <img src="img/timg (3).jpeg" width="50%" >
+        <img src="img/timg (4).jpeg" width="50%" >
+        <img src="img/timg (5).jpeg" width="50%" >        
+    </div>
+
+    <script>
+        window.onload=function(){
+            var box=document.getElementById('box');
+            var imgs=box.getElementsByTagName('img');
+
+            var imgWidth=imgs[0].offsetWidth;
+            var showWidth=200;
+            var boxWidth=imgWidth+(imgs.length-1)*showWidth;
+
+            box.style.width=boxWidth+"px";
+
+            var translate=imgWidth-showWidth;
+
+            function setImgpos() {
+                for(var i=1;i<imgs.length;i++){
+                    imgs[i].style.left=imgWidth+showWidth*(i-1)+"px";
+                }
+            }
+            setImgpos();
+
+            for(var i=0;i<imgs.length;i++){
+                (function (i) {
+                    //使用立即调用函数表达式，为了获得不同的i值 否则直接是最后一个值
+                    imgs[i].onmouseover=function(){
+                        setImgpos();
+                        for(var j=1;j<=i;j++){
+                            imgs[j].style.left=parseInt(imgs[j].style.left,10)-translate+'px';
+                        }
+                    }
+                  })(i);
+            }
+        }
+    </script>
+</body>
+</html>
