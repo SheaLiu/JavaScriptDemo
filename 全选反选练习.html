@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>全选反选练习</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        ul{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button id="chooseAll">全选</button>
+        <button id="noChoose">反选</button>
+        是否都被选中：<input type="checkbox" id="isAll">
+        <ul>
+                <li><input type="checkbox" />视频</li>
+                <li><input type="checkbox" />图片</li>
+                <li><input type="checkbox" />文字</li>
+                <li><input type="checkbox" />娱乐</li>
+                <li><input type="checkbox" />电影</li>
+                <li><input type="checkbox" />哈哈</li>  
+        </ul>
+    </div>
+    <script>
+        var chooseAll=document.getElementById("chooseAll");
+        var noChoose=document.getElementById('noChoose');
+        var isAll=document.getElementById('isAll');
+        var lists=document.querySelectorAll("ul>li>input");
+
+        chooseAll.onclick=function(){
+            for(var i=0;i<lists.length;i++){
+                lists[i].checked="true";
+            }
+            isAll.checked="true";
+        }
+
+        noChoose.onclick=function(){
+            var chooseNum=0;
+            for(var i=0;i<lists.length;i++){
+                lists[i].checked=!lists[i].checked;
+                if(lists[i].checked){
+                    chooseNum+=1;
+                }
+            }
+            isAll.checked= chooseNum ==lists.length? true:false;
+        }
+
+       
+       
+        
+    
+    </script>
+</body>
+</html>

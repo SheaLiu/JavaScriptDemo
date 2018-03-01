@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>换图练习</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <img src="img/timg (1).jpeg" alt="">
+    <div class="box">
+        <button id="left">向左</button>
+        <button id="right">向右</button>
+        <button id="begin">自动开始</button>
+        <button id="stop">停止</button>        
+    </div>
+    <script>
+        var img=document.querySelector("img");
+        var left=document.getElementById("left");
+        var right=document.getElementById("right");
+        var begin=document.getElementById("begin");
+        var stop=document.getElementById("stop");
+
+        var timer;
+        var index=0;
+        var imgs=["img/timg (1).jpeg","img/timg (2).jpeg","img/timg (3).jpeg","img/timg (4).jpeg"];
+
+        left.onclick=function(){
+            index--;
+            index=index<0?imgs.length-1:index;
+            img.src=imgs[index];
+            img.direction="left";
+        }
+
+        right.onclick=function(){
+            index++;
+            index=index>imgs.length-1?0:index;
+            img.src=imgs[index];
+            img.direction="right";
+        }
+
+        begin.onclick=function(){
+            clearInterval(timer);
+            timer=setInterval(function () {
+                var value=img.direction=="left"?-1:1;
+                changeImg(value);
+              },500);
+        }
+        function changeImg(value) {
+            if(value==-1){
+                index--;
+                index=index<0?imgs.length-1:index;
+                img.src=imgs[index];
+            }else{
+                index++;
+                index=index>imgs.length-1?0:index;
+                img.src=imgs[index];
+            }
+        }
+        stop.onclick=function(){
+            clearInterval(timer);                        
+        }
+
+       
+    </script>
+</body>
+</html>

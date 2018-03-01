@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>注册邮箱账号</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: rgb(190, 188, 188);
+        }
+        .main{
+            background-color: white;
+            width: 800px;
+            height: 700px;
+            margin: 0 auto;
+            margin-top: 60px;
+        }
+        img{
+            width: 50px;
+            height: 50px;
+        }
+        .top{
+            font-size: 25px;
+            padding-left: 30px;
+            padding-top: 30px;
+            display: table-cell;
+            height: 52px;
+            width: 100%;
+           
+        }
+       .form{
+           width: 700px;
+           line-height: 3em;
+           margin: 0 auto;
+           padding-top: 20px;
+       }
+       .font{
+           font-size: 18px;
+           text-align: right;
+           width: 150px;
+           display: inline-block;
+           vertical-align: middle; 
+       }
+       #email,#username,#repassword,#password{
+           width: 300px;
+           height: 30px;
+       }
+       .inputoth{ 
+			display: inline-table; 
+			vertical-align: top; 
+			font-size:.5em; 
+			width: 150px; 
+			line-height: 1.1em; 
+			padding-top: 1.2em;
+		}
+        #yz{
+            width: 300px;
+        }
+        #yz,#down{ 
+			display: inline-block; 
+			vertical-align: middle; 
+		}
+        #sex{ 
+			width: 50px;
+		 }
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="top">注册邮箱账号</div>
+        <hr>
+        <div class="form">
+            <form action="#" method="post">
+                <label for="email">
+                    <span class="font">邮箱账号</span>
+                    <input type="email" name="email" id="email">
+                </label>
+                <div class="inputoth">
+                    请输入您常用的电子邮箱<br>
+                    <a href="#">创建邮箱</a>
+                    或
+                    <a href="#">注册普通QQ号</a>
+                </div>
+                <br>
+                <label for="username">
+                    <span class="font">昵称</span>
+                    <input type="text" name="username" id="username">
+                </label>
+                <br>
+                <label for="password">
+                    <span class="font">密码</span>
+                    <input type="password" name="password" id="password">
+                </label>
+                <br>
+                <label for="repassword">
+                    <span class="font">确认密码</span>
+                    <input type="password" name="password" id="repassword">
+                </label>
+                <br>
+                <span class="font">性别</span>
+                <input type="radio" value="0" name="sex" id="sex">男
+                <input type="radio" value="1" name="sex" id="sex">女
+                <br>
+                <span class="font">生日</span>
+                <select name="type" id="type">
+                    <option value="0">阳历</option>
+                    <option value="1">农历</option>
+                </select>
+                <input type="date" name="data">
+                <br>
+                <span class="font">所在地</span>
+                <select name="con" id="con">
+                    <option value="0">中国</option>
+                    <option value="1">日本</option>                    
+                </select>
+                <select name="cit" id="cit">
+                    <option value="0">上海</option>
+                    <option value="0">北京</option>                    
+                </select>
+                <select name="qu" id="qu">
+                    <option value="0">黄浦</option>
+                    <option value="1">朝阳</option>                    
+                </select>
+                <br>
+                <span class="font">验证码</span>
+                <a href="#"><img src="img/opera-logo.jpg" id="yz"></a>
+                请先进行安全验证
+                <br>
+                <span class="font"></span>
+                <label for="yes">
+                    <input type="checkbox" name="yes" id="yes">
+                    我已阅读并同意相关服务条款和隐私政策
+                    <a href="#"><img src="img/opera-logo.jpg" id="down" title="查看详情" ></a>
+                </label>
+                <br>
+                <span class="font"></span>
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>
