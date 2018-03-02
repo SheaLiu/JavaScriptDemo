@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>选颜色游戏</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+            border: 1px solid black;
+            margin-top: 30px;
+        }
+        ul{
+            list-style: none;
+            justify-content: space-around;  /*间隔自适应*/
+            display: flex;  				/*弹性布局*/          
+        }
+        .nav{
+            width: 600px;
+            height: 50px;
+            border-bottom: 1px solid black;
+            position: relative;
+        }
+        #score{
+            float: right;
+            width: 100px;
+            margin-top: 15px;  
+            margin-right: 20px; 
+        }
+        #time{
+            width: 150px;
+            float: left;
+            margin-top: 15px;
+            margin-left: 20px;
+        }
+        #question{
+            width: 400px;
+            height: 400px;
+            margin:0 auto;
+            text-align: center;
+            font-size: 200px;
+            line-height: 400px;
+        }
+        .colorlist{
+            width: 600px;
+            height: 100px;
+            line-height: 100px;
+        }
+        .colorlist li{
+            float: left;
+            font-size: 50px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="nav">
+            <div id="time">剩余时间: 500s
+            </div>
+            <div id="score">得分：</div>
+        </div>
+        <div id="question">黄</div>
+        <div class="colorlist">
+            <ul>
+                <li>黄</li>
+				<li>绿</li>
+				<li>蓝</li>
+				<li>紫</li>
+				<li>红</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        var initialTime=500;
+        var time=document.getElementById('time');
+        var timer=setInterval(function(){
+            initialTime--;
+            time.innerText="剩余时间："+initialTime+"s";
+            if(initialTime==0){
+                clearInterval(timer);
+                alert("游戏结束");
+            }
+        },1000);
+
+
+        var question=document.getElementById('question');
+        var textArr=["黄","绿","蓝","紫","红"];
+        var colorArr=["yellow","green","blue","purple","red"];
+
+        function changeQuestion() {
+            var textRand=randNum(0,4);
+            question.innerText=textArr[textRand];
+            var colorRand=randNum(0,4);
+            question.style.color=colorArr[colorRand];
+            question.answer=textArr[colorRand];
+            document.title=question.answer;
+            
+        }
+
+        function randNum(min,max) {
+            return parseInt(Math.random()*(max-min+1)+min);
+        }
+        changeQuestion();
+
+        var colorList=document.getElementsByClassName('colorlist')[0];
+        var colors=colorList.querySelectorAll("li");
+
+        for(var i=0;i<colors.length;i++){
+            colors[i].onclick=function(){
+                var result=judgeColor(this.innerText);
+                recordScore(result);
+                changeQuestion();
+                layout();
+            }
+        }
+
+        function judgeColor(chooseColor){
+            return chooseColor==question.answer?true:false;
+        }
+
+        var scoreFlag=0;
+        var score=document.getElementById('score');
+
+        function recordScore(result){
+            scoreFlag=result?++scoreFlag:--scoreFlag;
+            score.innerText="得分："+scoreFlag;
+        }
+
+        //利用函数将数组顺序打乱后再进行赋值
+        var textArrLayout=["黄","绿","蓝","紫","红"];
+        var colorArrLayout=["yellow","green","blue","purple","red"];        
+        function layout(){
+            randomArr(textArrLayout);
+            randomArr(colorArrLayout);
+
+            for(var i=0;i<colors.length;i++){
+                colors[i].innerText=textArrLayout[i];
+                colors[i].style.color=colorArrLayout[i];
+            }
+        }
+
+        function randomArr(sourceArr){
+            for(var i=0;i<sourceArr.length;i++){
+            var randN=randNum(0,sourceArr.length-1);
+            var temp=sourceArr[i];
+            sourceArr[i]=sourceArr[randN];
+            sourceArr[randN]=temp;
+        }
+        }
+    layout();
+    </script>
+</body>
+</html>
