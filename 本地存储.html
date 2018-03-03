@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>本地存储</title>
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<input type="text" id="key1" placeholder="key"/>
+		<hr />
+		<input type="text" id="value1" placeholder="value"/>
+		<button id="btn">保存</button>
+	</body>
+	<script type="text/javascript">
+	/*
+	本地永久存储：浏览器关闭或者刷新，数据不会被清除，永久保存到了硬盘
+	最大容量：5M
+	兼容性：ie678不支持
+	 * */
+		console.log(window.localStorage);
+		//localStorage.name = "名字";
+		//console.log(localStorage);
+		if(window.localStorage){
+			//支持
+			//alert('支持');
+		}else{
+			//不支持
+			//alert('不支持');
+		}
+//		if(window.aaa){
+//			alert('支持');
+//		}else{
+//			alert('不支持');
+//		}
+		console.log(localStorage.name);
+		
+		localStorage.age = 20;
+		localStorage['gender'] = '男';
+		
+		console.log(localStorage.length);
+		//标准规定可以存任意类型，但是，目前数据被存入后全是以字符串类型保存
+		console.log(typeof localStorage.age);
+		console.log('~~~~~~~~~~~~');
+		//遍历对象方法 for in循环
+		//in以前获取到对象属性名 后面是需要遍历的对象
+		for(var property in localStorage){
+			console.log(property,localStorage[property]);
+		}
+		
+		//
+		localStorage.eat = function(){
+			alert('去食堂吃饭');
+		};
+		console.log(localStorage.eat);//string
+		
+		var rel = eval('2+9*10');
+		console.log(rel);
+		
+		//eval('(' + localStorage.eat + ')()');
+		
+		//存数组
+		var names = ['名字1','名字2','名字3'];
+		localStorage.names = names;
+		
+		console.log(localStorage.names);//string
+		
+		var namesGet = localStorage.names.split(',');
+		console.log(namesGet);
+		
+		//设置
+		localStorage.setItem('张三','是文化人');
+		localStorage.setItem('李四','喜欢安静');
+		
+		console.log(localStorage.getItem('李四'));
+		
+		//删除指定key的值
+		localStorage.removeItem('张三');
+		localStorage.removeItem('李四');
+		//对象属性的删除
+		delete localStorage.age;
+		
+		//默认的只读属性不能被删除 length
+		localStorage.removeItem('length');
+		
+		//全部删除
+		localStorage.clear();
+		//delete localStorage.length;
+		
+		//onstorage 事件
+		/*
+		 本地key存储的值发生改变，或者新增加了存储属性，或者删除属性都会触发onstorage
+		 chrome火狐必须两个相同页面，一个页面改动，另一个页面触发onsrroage
+		 * */ 
+		window.onstorage = function(ev){
+			var ev = ev || window.event;
+			console.log(ev);
+		};
+		
+		var btn = document.getElementById("btn");
+		var key1 = document.getElementById("key1");
+		var value1 = document.getElementById("value1");
+		
+		btn.onclick = function(){
+			localStorage.setItem(key1.value,value1.value);
+			alert(localStorage.key1);
+        };
+        
+
+        /*
+		 将数据保存到浏览器中，浏览器关闭后数据没了
+		 使用方式和localStroage一样
+		 * */
+		console.log(window.sessionStorage);
+		
+		sessionStorage.name = "石头";
+		sessionStorage['age'] = 20;
+		
+		sessionStorage.setItem('gender','男');
+		//key值相同时属性值被覆盖
+		sessionStorage.name = "大石头";
+		
+		
+		//删除 删除 全部删除
+		//sessionStorage.removeItem('age');
+		//delete sessionStorage.name;
+		//sessionStorage.clear();
+		
+		for(var pro in sessionStorage){
+			console.log(pro,sessionStorage[pro]);
+        }
+        
+
+		/*
+		cookie:
+		存储一段文本，一般目的：提交给服务端
+		
+		1.保存用户登录状态
+		2.跟踪用户交互
+		
+		弊端：容量小 4kb
+		不同浏览器管理不同的cookie，每个浏览器只能访问自己保存的值
+		cookie属于document对象属性
+		
+		保存方式：document.cookie = '属性名=属性值'; key = value
+		 * */
+		console.log(document.cookie);
+		
+		//可以一直存储，之前内容不会被覆盖
+		document.cookie = 'name=shitou';
+		document.cookie = 'age=18';
+		document.cookie = 'gender=man';
+		
+		//cookie类型
+		console.log(typeof document.cookie);//string
+		
+		
+		//若使用汉字，特殊符号空格等，需要转码
+		document.cookie = 'hobby=' + escape('学习');
+		//console.log(document.cookie);
+		//转码escape:转码为16进制转义序列
+		var esStr = escape('学习');
+		console.log(esStr);//%u5B66%u4E560
+		//转码
+		var str = unescape(esStr)
+		console.log(str);
+		//不能一次设置多个cookie值
+		document.cookie = 'name=xiaoshitou;age=20';
+		
+		document.cookie = 'hobby=book';
+		
+		
+		//指定一个过期日期
+		var date1 = new Date("8 3 2017 12:00:00");
+		console.log(date1.toString());
+		//GMT:格林尼治时间
+		console.log(date1.toGMTString());
+		
+		document.cookie = 'weight=160; expires=' +date1.toGMTString();
+		
+		//方式2：
+		//max-age:单位秒，距离执行当前代码的时间，过了这个时间被释放
+		document.cookie = 'grade=80; max-age=10';
+		
+		//删除:属性值为空，过期时间为-1
+		document.cookie = 'weight=160; max-age=-1';
+		
+		//通过key 获取对应的值
+		function getCookie(keyName){
+			var resArr = document.cookie.split(';');
+			//[" name=xiaoshitou"4: " grade=80"]
+			//console.log(resArr);
+			//
+			for(var i = 0; i < resArr.length; i++){
+				//console.log(resArr[i]);
+				var keyValues = resArr[i].split('=');
+				console.log(keyValues);
+				if(keyValues[0].trim() == keyName){
+					return keyValues[1];
+				}
+			}
+		}
+		var value = getCookie('name');
+		console.log(value);
+		
+		//trim(): 去除收尾空格
+		console.log('    111   ');
+		console.log('    111   '.trim());
+		
+		//设置cookie
+		function setCookie(keyName,value,maxAge){
+			document.cookie = keyName + '=' + value + '; max-age=' + maxAge;
+		}
+		
+		setCookie('dashittt','233',24*3600);
+		//删除cookie
+		function removeCookie(keyName){
+			setCookie(keyName,'',-1);
+		}
+		
+		removeCookie("dashittt");
+	</script>
+</html>
