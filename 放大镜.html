@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>放大镜</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        #min_wrap{
+            position: absolute;
+            top:50px;
+            left: 50px;
+            border:1px solid silver;
+        }
+        #slider{
+				position: absolute;
+				width: 50%;
+				height: 50%;
+				left: 0;
+				top: 0;
+				background-color: rgba(100,100,100,0.3);
+				display: none;
+			}
+        #max_wrap{
+            border: 2px solid silver;
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            left: 450px;
+            top:50px;
+            display: none;
+            overflow: hidden;
+        }
+        #max_wrap img{
+            left: 0;
+            right: 0;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="min_wrap">
+        <img src="img/safari-logo-small.jpg">
+        <div id="slider"></div>
+    </div>
+    <div id="max_wrap">
+        <img src="img/safari-logo.jpg">
+    </div>
+    <script>
+        var minWrap=document.getElementById('min_wrap');
+        var slider=document.getElementById("slider");
+        var maxWrap=document.getElementById("max_wrap");
+        var bigImage=document.querySelector("#max_wrap img")
+        
+        minWrap.onmouseover=function(){
+            slider.style.display="block";
+            maxWrap.style.display="block";
+        }
+
+        minWrap.onmousemove=function(ev){
+            var ev=ev||event;
+            //获取鼠标minwrap移动的坐标
+            var x=ev.pageX-this.offsetLeft-this.clientLeft-slider.offsetLeft/2;
+            var y=ev.pageY-this.offsetTop-this.clientTop-slider.offsetTop/2;
+
+            //获取移动的范围
+            var maxX=minWrap.clientWidth-slider.offsetWidth;
+            var maxY=minWrap.clientHeight-slider.offsetHeight;
+
+            //控制滑块位置
+            x = x>=maxX?maxX:x;
+            y = y>=maxY?maxY:y;
+            x = x<=0?0:x;
+            y = y<=0?0:y;
+
+            slider.style.left=x+"px";
+            slider.style.top=y+"px";
+
+             //比例关系
+            // x/maxX == maxWrap(移动X) / (大图片宽度-maxWrap宽度)
+            var scaleX = x / maxX;
+            var scaleY = y / maxY;
+
+            bigImage.style.left=-scaleX*(bigImage.offsetWidth-maxWrap.clientWidth)+"px";
+            bigImage.style.top=-scaleY*(bigImage.offsetHeight-maxWrap.clientHeight)+"px";
+        }
+             //鼠标移出
+            minWrap.onmouseout=function(){
+            slider.style.display="none";
+            maxWrap.style.display="none";
+        }
+    </script>
+</body>
+</html>
